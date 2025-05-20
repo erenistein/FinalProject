@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hastalık Tahmin Uygulaması</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="mb-4">🤒 Hastalık Tahmini</h2>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Belirtilerinizi seçin:</label>
+                    <div class="row">
+                        {% for symptom in symptoms %}
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="symptoms" value="{{ symptom }}" id="{{ symptom }}">
+                                    <label class="form-check-label" for="{{ symptom }}">{{ symptom.replace("_", " ") }}</label>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Tahmin Et</button>
+            </form>
+
+            {% if prediction %}
+                <div class="alert alert-success mt-4" role="alert">
+                    📢 <strong>Tahmin Edilen Hastalık:</strong> {{ prediction }}
+                </div>
+            {% endif %}
+
+            {% if chat_user and chat_bot %}
+                <div class="card mt-4 p-3">
+                    <div class="mb-2 text-primary">
+                        <strong>{{ chat_user }}</strong>
+                    </div>
+                    <div class="bg-light border rounded p-3 text-dark">
+                        <strong>🤖 ChatGPT:</strong><br>{{ chat_bot }}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>
